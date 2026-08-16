@@ -16,7 +16,7 @@ This repo starts intentionally small:
 - Installs GUI apps via Homebrew Cask: Ghostty, 1Password, 1Password CLI, Raycast, OpenSuperWhisper, and JetBrains Mono Nerd Font
 - Installs Herdr via Homebrew
 - Installs GNU-compatible Linux-style CLI tools via Homebrew, preferring their unprefixed versions in zsh: coreutils, grep, findutils, gawk, GNU sed/tar/time/which/getopt, diffutils, gzip, make, and patch
-- Installs `mise` via Nix/Home Manager
+- Installs `mise` via Nix/Home Manager and manages global mise tools: Node LTS, Python, Go, Bun, Supabase CLI, and Talos CLI
 - Bootstraps Pi via mise-managed Node/npm if `pi` is not already installed; Pi then manages its own updates with `pi update`
 - Links Ghostty config from `dotfiles/ghostty/config`
 - Manages a fresh Zsh, Starship, Atuin, direnv, fzf, zoxide, SSH, Git, and CLI-tool foundation with Home Manager
@@ -76,7 +76,7 @@ Those values are passed to Nix via environment variables during `--impure` flake
 
 If Nix was just installed, open a new shell and run the bootstrap script again.
 
-After nix-darwin activation, the scripts run `scripts/install-pi.sh`. This installs Node.js LTS with mise and installs Pi from npm only when `pi` is missing. Pi is intentionally not pinned by Nix so `pi update` can update the CLI and its packages normally.
+After nix-darwin activation, the scripts run `scripts/install-pi.sh`. This installs tools from `~/.config/mise/config.toml` and installs Pi from npm only when `pi` is missing. Pi is intentionally not pinned by Nix so `pi update` can update the CLI and its packages normally.
 
 ## Applying changes
 
@@ -132,12 +132,14 @@ modules/home/starship.nix  # Prompt theme/config
 modules/home/atuin.nix     # Local-only shell history search with secret filtering
 modules/home/agents.nix    # Global coding-agent instruction links
 modules/home/herdr.nix     # Herdr config link
+modules/home/mise.nix      # Global mise config link
 modules/home/git.nix       # Git defaults and Delta integration
 modules/home/ssh.nix       # Minimal SSH config for 1Password agent
 modules/home/cli-tools.nix # CLI utilities and shell integrations
 modules/home/ghostty.nix   # Ghostty config link
 dotfiles/ghostty/config    # Ghostty config source
 dotfiles/herdr/config.toml # Herdr config source
+dotfiles/mise/config.toml  # Global mise tools source
 ```
 
 Prompt/theme stack:

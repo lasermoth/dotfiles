@@ -1,0 +1,7 @@
+[tools]
+node = "lts"
+python = "latest"
+go = "latest"
+bun = "latest"
+supabase = "latest"
+talosctl = "latest"

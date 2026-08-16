@@ -19,9 +19,8 @@ if command -v pi >/dev/null 2>&1; then
   exit 0
 fi
 
-echo "Installing Node.js LTS with mise for pi..."
-"$mise_bin" install node@lts
-"$mise_bin" use --global node@lts
+echo "Installing mise-managed tools from ~/.config/mise/config.toml..."
+"$mise_bin" install --yes
 
 echo "Installing pi via npm. Future updates should use: pi update"
 "$mise_bin" exec node@lts -- npm install -g --ignore-scripts @earendil-works/pi-coding-agent

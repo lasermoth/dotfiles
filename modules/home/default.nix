@@ -12,6 +12,7 @@
         ./ghostty.nix
         ./git.nix
         ./herdr.nix
+        ./mise.nix
         ./ssh.nix
         ./starship.nix
         ./zsh.nix
