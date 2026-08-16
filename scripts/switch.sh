@@ -29,3 +29,5 @@ sudo -H env \
   DOTFILES_USERNAME="$DOTFILES_USERNAME" \
   DOTFILES_HOSTNAME="$DOTFILES_HOSTNAME" \
   nix run github:LnL7/nix-darwin -- switch --impure --flake ".#${CONFIG}"
+
+./scripts/install-pi.sh

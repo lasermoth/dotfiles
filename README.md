@@ -16,6 +16,8 @@ This repo starts intentionally small:
 - Installs GUI apps via Homebrew Cask: Ghostty, 1Password, 1Password CLI, Raycast, OpenSuperWhisper, and JetBrains Mono Nerd Font
 - Installs Herdr via Homebrew
 - Installs GNU-compatible Linux-style CLI tools via Homebrew, preferring their unprefixed versions in zsh: coreutils, grep, findutils, gawk, GNU sed/tar/time/which/getopt, diffutils, gzip, make, and patch
+- Installs `mise` via Nix/Home Manager
+- Bootstraps Pi via mise-managed Node/npm if `pi` is not already installed; Pi then manages its own updates with `pi update`
 - Links Ghostty config from `dotfiles/ghostty/config`
 - Manages a fresh Zsh, Starship, Atuin, direnv, fzf, zoxide, SSH, Git, and CLI-tool foundation with Home Manager
 - Manages global coding-agent instruction files for Pi, opencode, Codex CLI, Claude Code, and Gemini CLI
@@ -33,6 +35,7 @@ modules/darwin/           # Machine-level nix-darwin modules
 modules/home/             # User-level Home Manager modules
 dotfiles/                 # Source files linked into $HOME
 scripts/bootstrap-macos.sh # First-time setup script
+scripts/install-pi.sh     # One-time Pi bootstrap via mise-managed Node/npm
 scripts/machine-env.sh    # First-run machine identity prompts/helpers
 scripts/switch.sh         # Apply config changes
 secrets/                  # Notes only; do not commit secrets
@@ -72,6 +75,8 @@ DOTFILES_HOSTNAME=your-mac
 Those values are passed to Nix via environment variables during `--impure` flake evaluation, so machine-specific names do not need to be committed. The hostname is applied to `networking.computerName`, `networking.hostName`, and `networking.localHostName`.
 
 If Nix was just installed, open a new shell and run the bootstrap script again.
+
+After nix-darwin activation, the scripts run `scripts/install-pi.sh`. This installs Node.js LTS with mise and installs Pi from npm only when `pi` is missing. Pi is intentionally not pinned by Nix so `pi update` can update the CLI and its packages normally.
 
 ## Applying changes
 
