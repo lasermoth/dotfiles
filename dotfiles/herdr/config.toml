@@ -1,0 +1,125 @@
+# Herdr configuration
+# Docs: https://herdr.dev/docs/configuration/
+
+# Skip first-run onboarding because this repo owns the starter config.
+onboarding = false
+
+[terminal]
+# Use zsh for new panes and login mode on macOS so PATH/homebrew/nix setup is loaded.
+default_shell = "/bin/zsh"
+shell_mode = "login"
+new_cwd = "follow"
+
+[session]
+# Herdr's default, kept explicit: restore supported agent sessions after restart.
+resume_agents_on_restore = true
+
+[theme]
+# The website screenshots are closest to Herdr's Tokyo Night palette.
+name = "tokyo-night"
+auto_switch = true
+dark_name = "tokyo-night"
+light_name = "tokyo-night-day"
+
+# Keep framing/dividers a little more visible than the built-in defaults.
+[theme.custom]
+accent = "#7aa2f7"
+panel_bg = "#1a1b26"
+surface0 = "#24283b"
+surface1 = "#414868"
+surface_dim = "#3b4261"
+overlay0 = "#565f89"
+overlay1 = "#737aa2"
+text = "#c0caf5"
+subtext0 = "#a9b1d6"
+green = "#9ece6a"
+yellow = "#e0af68"
+red = "#f7768e"
+teal = "#7dcfff"
+
+[ui]
+sidebar_width = 30
+sidebar_min_width = 24
+sidebar_max_width = 40
+pane_borders = true
+pane_gaps = true
+show_agent_labels_on_pane_borders = true
+hide_tab_bar_when_single_tab = false
+prompt_new_tab_name = true
+accent = "#7aa2f7"
+
+[ui.sidebar.spaces]
+row_gap = 1
+rows = [
+  ["state_icon", { token = "workspace", bold = true, dim = false }],
+  [{ token = "branch", fg = "#7aa2f7", dim = false }, "git_status"],
+]
+
+[ui.sidebar.agents]
+row_gap = 1
+rows = [
+  ["state_icon", { token = "workspace", bold = true, dim = false }, "tab"],
+  [{ token = "state_text", bold = true }, "agent"],
+]
+
+[ui.toast]
+# In-app notifications for background panes/agents that finish or need attention.
+delivery = "herdr"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"
+
+[ui.sound]
+enabled = false
+
+[keys]
+prefix = "ctrl+b"
+help = "prefix+?"
+detach = "prefix+q"
+reload_config = "prefix+shift+r"
+toggle_sidebar = "prefix+b"
+
+new_tab = ["prefix+c", "ctrl+alt+c"]
+rename_tab = ["prefix+shift+t", "ctrl+alt+r"]
+next_tab = ["prefix+n", "ctrl+alt+]"]
+previous_tab = ["prefix+p", "ctrl+alt+["]
+switch_tab = "prefix+1..9"
+close_tab = "prefix+shift+x"
+
+split_vertical = ["prefix+v", "ctrl+alt+d"]
+split_horizontal = ["prefix+minus", "ctrl+alt+shift+d"]
+zoom = ["prefix+z", "ctrl+alt+z"]
+close_pane = "prefix+x"
+focus_pane_left = ["prefix+h", "ctrl+alt+h"]
+focus_pane_down = ["prefix+j", "ctrl+alt+j"]
+focus_pane_up = ["prefix+k", "ctrl+alt+k"]
+focus_pane_right = ["prefix+l", "ctrl+alt+l"]
+
+new_workspace = "prefix+shift+n"
+workspace_picker = "prefix+w"
+switch_workspace = "prefix+shift+1..9"
+
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "lazygit"
+description = "open lazygit"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+t"
+type = "popup"
+command = "exec \"${SHELL:-/bin/zsh}\""
+description = "open scratch shell"
+width = "80%"
+height = "80%"
+
+[[keys.command]]
+key = "prefix+alt+h"
+type = "popup"
+command = "herdr --help | less -R"
+description = "show herdr help"
+width = "90%"
+height = "90%"

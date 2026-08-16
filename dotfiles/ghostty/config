@@ -1,0 +1,16 @@
+# Ghostty configuration
+# Docs: https://ghostty.org/docs/config
+
+# Start Ghostty inside a small wrapper that launches Herdr but falls back to a shell
+# if Herdr is unavailable or exits with an upgrade/protocol mismatch.
+command = /Users/nduff/.local/bin/ghostty-herdr
+
+font-family = JetBrainsMono Nerd Font
+font-size = 14
+theme = dark:Catppuccin Mocha,light:Catppuccin Latte
+macos-titlebar-style = tabs
+window-padding-x = 8
+window-padding-y = 8
+
+# Keep the macOS option key useful for shell shortcuts and text editing.
+macos-option-as-alt = true
