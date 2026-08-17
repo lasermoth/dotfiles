@@ -30,4 +30,5 @@ echo "Installing mise-managed tools from ~/.config/mise/config.toml..."
 echo "Installing pi via npm. Future updates should use: pi update"
 "$mise_bin" exec node@lts -- npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 
-echo "pi installed. Open a new shell, or run 'eval \"$(mise activate zsh)\"', before using it."
+echo "pi installed. Open a new shell before using it."
+echo "If you need it in the current shell, run: eval \"\$(mise activate zsh)\""
