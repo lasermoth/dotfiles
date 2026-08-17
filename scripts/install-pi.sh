@@ -14,6 +14,11 @@ if [[ -z "$mise_bin" ]]; then
   fi
 fi
 
+# Home Manager has just activated during bootstrap, but the current shell may not
+# have the new Nix profile on PATH yet. Add it explicitly so mise/npm shims can
+# call `mise`, and so tools like `gpg` are visible during mise installs.
+export PATH="$(dirname "$mise_bin"):/etc/profiles/per-user/$(id -un)/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:$HOME/.local/bin:$PATH"
+
 if command -v pi >/dev/null 2>&1; then
   echo "pi is already installed at $(command -v pi). Use 'pi update' to update it."
   exit 0
