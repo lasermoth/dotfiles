@@ -9,7 +9,7 @@ if [[ -z "$mise_bin" ]]; then
   elif [[ -x "/etc/profiles/per-user/$(id -un)/bin/mise" ]]; then
     mise_bin="/etc/profiles/per-user/$(id -un)/bin/mise"
   else
-    echo "mise is not available yet; skipping pi install. Re-run ./scripts/switch.sh after activation."
+    echo "mise is not available yet; skipping pi install. Re-run ./scripts/apply.sh after activation."
     exit 0
   fi
 fi

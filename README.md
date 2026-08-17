@@ -34,10 +34,11 @@ hosts/current/            # Generic macOS host config using machine-local settin
 modules/darwin/           # Machine-level nix-darwin modules
 modules/home/             # User-level Home Manager modules
 dotfiles/                 # Source files linked into $HOME
-scripts/bootstrap-macos.sh # First-time setup script
+scripts/apply.sh          # Single entrypoint for first-time setup and later updates
+scripts/bootstrap-macos.sh # Backwards-compatible wrapper around apply.sh
 scripts/install-pi.sh     # One-time Pi bootstrap via mise-managed Node/npm
 scripts/machine-env.sh    # First-run machine identity prompts/helpers
-scripts/switch.sh         # Apply config changes
+scripts/switch.sh         # Backwards-compatible wrapper around apply.sh
 secrets/                  # Notes only; do not commit secrets
 ```
 
@@ -57,13 +58,13 @@ secrets/                  # Notes only; do not commit secrets
    cd ~/repositories/dotfiles
    ```
 
-3. Run the bootstrap script:
+3. Run the apply script:
 
    ```sh
-   ./scripts/bootstrap-macos.sh
+   ./scripts/apply.sh
    ```
 
-The bootstrap script will install Nix if needed, then apply the nix-darwin configuration.
+The apply script is the single entrypoint for both first-time setup and later updates. It will install Nix if needed, then apply the nix-darwin configuration once Nix is available.
 
 On first run, the script asks you to confirm the detected macOS username and choose a machine hostname. It writes the answers to a gitignored `.machine.env` file:
 
@@ -74,7 +75,11 @@ DOTFILES_HOSTNAME=your-mac
 
 Those values are passed to Nix via environment variables during `--impure` flake evaluation, so machine-specific names do not need to be committed. The hostname is applied to `networking.computerName`, `networking.hostName`, and `networking.localHostName`.
 
-If Nix was just installed, open a new shell and run the bootstrap script again.
+If Xcode Command Line Tools or Nix were just installed, open a new shell if prompted and rerun the same command:
+
+```sh
+./scripts/apply.sh
+```
 
 After nix-darwin activation, the scripts run `scripts/install-pi.sh`. This installs tools from `~/.config/mise/config.toml` and installs Pi from npm only when `pi` is missing. Pi is intentionally not pinned by Nix so `pi update` can update the CLI and its packages normally.
 
@@ -83,7 +88,7 @@ After nix-darwin activation, the scripts run `scripts/install-pi.sh`. This insta
 After editing the repo, apply the current configuration with:
 
 ```sh
-./scripts/switch.sh
+./scripts/apply.sh
 ```
 
 By default this applies the generic `current` config using `.machine.env`.
@@ -91,10 +96,10 @@ By default this applies the generic `current` config using `.machine.env`.
 To update the username or machine hostname later, rerun with:
 
 ```sh
-./scripts/switch.sh --configure
+./scripts/apply.sh --configure
 ```
 
-You can also manually edit `.machine.env` and rerun the switch script.
+You can also manually edit `.machine.env` and rerun the apply script.
 
 ## Adding GUI apps
 
@@ -117,7 +122,7 @@ homebrew.casks = [
 Then run:
 
 ```sh
-./scripts/switch.sh
+./scripts/apply.sh
 ```
 
 ## Shell and terminal setup

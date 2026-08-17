@@ -25,7 +25,7 @@ write_machine_env() {
 
   {
     printf '# Machine-local dotfiles settings. This file is gitignored.\n'
-    printf '# Re-run ./scripts/switch.sh --configure to update these values.\n'
+    printf '# Re-run ./scripts/apply.sh --configure to update these values.\n'
     printf 'DOTFILES_USERNAME=%q\n' "$username"
     printf 'DOTFILES_HOSTNAME=%q\n' "$hostname"
   } >"$MACHINE_ENV"
